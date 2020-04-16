@@ -16,7 +16,37 @@
         class="iot_view_internetServer_table"
         :rowKey="record => record.uid"
         :loading="loadingState"
+        :pagination="false"
       >
+        <span slot="res" slot-scope="text">
+          <img :src="text" style="height: 96px;line-height: 96px" />
+        </span>
+        <span slot="amount" slot-scope="text, record">
+          <i
+            class="iconfont icon-plus-square-solid"
+            style="color: #24936E;font-size: 24px;line-height: 24px;cursor: pointer"
+            @click="addBook(record)"
+          ></i>
+          <span
+            style="margin: auto 5px;line-height: 24px;vertical-align: top"
+            >{{ text }}</span
+          >
+          <i
+            class="iconfont icon-minus-square"
+            style="color: #24936E;font-size: 24px;;line-height: 24px;cursor: pointer"
+            @click="subtractBook(record)"
+          ></i>
+        </span>
+        <span slot="price" slot-scope="text">
+          <i
+            class="iconfont icon-renminbi"
+            style="color: #24936E;font-size: 16px;;line-height: 24px;cursor: pointer"
+          ></i>
+          <span
+            style="margin: auto 5px;line-height: 24px;vertical-align: top"
+            >{{ text }}</span
+          >
+        </span>
         <span slot="action" slot-scope="text, record">
           <a @click="checkDetail(record)">详情</a>
           <a-divider type="vertical" />
@@ -216,6 +246,12 @@ import ARow from "ant-design-vue/es/grid/Row";
 import ACol from "ant-design-vue/es/grid/Col";
 const columns = [
   {
+    title: "封面",
+    dataIndex: "res",
+    key: "res",
+    scopedSlots: { customRender: "res" }
+  },
+  {
     title: "书名",
     dataIndex: "name",
     key: "name"
@@ -233,12 +269,14 @@ const columns = [
   {
     title: "数量",
     dataIndex: "amount",
-    key: "amount"
+    key: "amount",
+    scopedSlots: { customRender: "amount" }
   },
   {
     title: "价格",
     dataIndex: "price",
-    key: "price"
+    key: "price",
+    scopedSlots: { customRender: "price" }
   },
   {
     title: "操作",
@@ -259,6 +297,12 @@ export default {
   },
   beforeMount() {
     this.loadingState = false;
+
+    this.$api.shoppingCard.shoppingDetail({}).then(res => {
+      console.log(res);
+      console.log(res.data.result);
+      this.infoData = res.data.result;
+    });
   },
   methods: {
     onSelectChange(selectedRowKeys) {
@@ -270,6 +314,23 @@ export default {
     },
     deleteBook(record) {
       console.log(record);
+    },
+    addBook(record) {
+      let amount = parseInt(record.amount, 10);
+      let priceSum = parseInt(record.price, 10);
+      let price = priceSum / amount;
+      record.amount = amount + 1;
+      record.price = price * (amount + 1);
+    },
+    subtractBook(record) {
+      console.log(record);
+      let amount = parseInt(record.amount, 10);
+      if (amount > 1) {
+        record.amount = amount - 1;
+        let priceSum = parseInt(record.price, 10);
+        let price = priceSum / amount;
+        record.price = price * (amount - 1);
+      }
     }
   }
 };
@@ -312,6 +373,9 @@ export default {
 /deep/.ant-table-thead > tr > th,
 .ant-table-tbody > tr > td {
   padding: 8px 8px;
+}
+/deep/.ant-table-tbody > tr > td {
+  padding: 16px 8px !important;
 }
 /deep/.ant-card-body {
   padding: 30px 25px;

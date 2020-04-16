@@ -2,12 +2,9 @@
 import { get } from "./axios";
 
 export default {
-  index: {
-    mapMarkers: data => {
-      return get("/index/mapMarkers", data);
-    },
-    message: data => {
-      return get("/index/message", data);
+  shoppingCard: {
+    shoppingDetail: data => {
+      return get("/shoppingDetail", data);
     }
   }
 };

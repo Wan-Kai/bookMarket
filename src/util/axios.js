@@ -59,7 +59,6 @@ service.interceptors.response.use(
 
 //get方法
 export function get(url, data = {}) {
-  data.IERealTime = new Date().getTime(); //get方法加一个时间参数,解决ie下可能缓存问题.
   let sendObject = {
     url: url,
     method: "get",

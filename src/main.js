@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import API from "./util/api";
 import router from "./router";
 import store from "./store";
 import "core-js/stable";
@@ -43,6 +44,7 @@ Vue.use(Divider);
 Vue.use(Form);
 Vue.use(Checkbox);
 Vue.config.productionTip = false;
+Vue.prototype.$api = API;
 
 new Vue({
   router,
