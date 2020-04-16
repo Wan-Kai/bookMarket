@@ -1,0 +1,58 @@
+{
+  "id": "1757847",
+  "name": "bookMarket",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "339475",
+      "name": "人民币",
+      "font_class": "renminbi",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "767685",
+      "name": "人民币",
+      "font_class": "renminbi1",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "1268730",
+      "name": "人民币",
+      "font_class": "renminbi1688",
+      "unicode": "e6cb",
+      "unicode_decimal": 59083
+    },
+    {
+      "icon_id": "3461115",
+      "name": "人民币",
+      "font_class": "renminbi2",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "5330237",
+      "name": "人民币",
+      "font_class": "renminbi4",
+      "unicode": "e76d",
+      "unicode_decimal": 59245
+    },
+    {
+      "icon_id": "844648",
+      "name": "人民币3",
+      "font_class": "renminbi3",
+      "unicode": "e73e",
+      "unicode_decimal": 59198
+    },
+    {
+      "icon_id": "772967",
+      "name": "car",
+      "font_class": "car",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    }
+  ]
+}
