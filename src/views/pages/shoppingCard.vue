@@ -65,7 +65,7 @@
           <div>
             <a-carousel autoplay dotPosition="left">
               <div>
-                <a-col :span="12">
+                <a-col :span="12" v-for="text in infoData" :key="text.id">
                   <a-card
                     :bordered="false"
                     :hoverable="true"
@@ -298,11 +298,16 @@ export default {
   beforeMount() {
     this.loadingState = false;
 
-    this.$api.shoppingCard.shoppingDetail({}).then(res => {
-      console.log(res);
-      console.log(res.data.result);
-      this.infoData = res.data.result;
-    });
+    this.$api.shoppingCard
+      .shoppingDetail({})
+      .then(res => {
+        console.log(res);
+        console.log(res.data.result);
+        this.infoData = res.data.result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     onSelectChange(selectedRowKeys) {

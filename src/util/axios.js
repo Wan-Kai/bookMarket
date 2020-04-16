@@ -1,12 +1,13 @@
 import axios from "axios"; // 引入axios
+import store from "../store";
 
 // 环境的切换
 if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "/api";
 } else if (process.env.NODE_ENV === "debug") {
-  axios.defaults.baseURL = "/pro";
+  axios.defaults.baseURL = "/api";
 } else if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "/pro";
+  axios.defaults.baseURL = "/api";
 }
 
 // 项目地址加端口
@@ -57,13 +58,33 @@ service.interceptors.response.use(
   }
 );
 
+//login
+export function login(url, data = {}) {
+  //用form data传输
+  let form = new FormData();
+  let keys = Object.keys(data);
+  keys.forEach(key => {
+    form.append(key, data[key]);
+  });
+  let sendObject = {
+    url: url,
+    method: "post",
+    headers: {},
+    data: form
+  };
+  //sendObject.data=JSON.stringify(data);
+  return service(sendObject).catch(() => {});
+}
+
 //get方法
 export function get(url, data = {}) {
   let sendObject = {
     url: url,
     method: "get",
     params: data,
-    headers: {}
+    headers: {
+      Authorization: store.getters.getSessionKey
+    }
   };
   // sendObject.data=JSON.stringify(data);
   return service(sendObject).catch(() => {});
@@ -71,14 +92,21 @@ export function get(url, data = {}) {
 
 //封装post请求
 export function post(url, data = {}) {
+  //用form data传输
+  let form = new FormData();
+  let keys = Object.keys(data);
+  keys.forEach(key => {
+    form.append(key, data[key]);
+  });
   //默认配置
   let sendObject = {
     url: url,
     method: "post",
     headers: {
-      "Content-Type": "application/json;charset=UTF-8"
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: store.getters.getSessionKey
     },
-    data: data
+    data: form
   };
   // sendObject.data=JSON.stringify(data);
   return service(sendObject).catch(() => {});
@@ -86,13 +114,20 @@ export function post(url, data = {}) {
 
 //封装put方法
 export function put(url, data = {}) {
+  //用form data传输
+  let form = new FormData();
+  let keys = Object.keys(data);
+  keys.forEach(key => {
+    form.append(key, data[key]);
+  });
   return service({
     url: url,
     method: "put",
     headers: {
-      "Content-Type": "application/json;charset=UTF-8"
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: store.getters.getSessionKey
     },
-    data: JSON.stringify(data)
+    data: form
   });
 }
 
@@ -101,7 +136,9 @@ export function deletes(url, data = {}) {
   let sendObject = {
     url: url,
     method: "delete",
-    headers: {},
+    headers: {
+      Authorization: store.getters.getSessionKey
+    },
     data: JSON.stringify(data)
   };
   // sendObject.data=JSON.stringify(data);

@@ -81,9 +81,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== from.path) {
-    NProgress.start();
-  }
+  NProgress.start();
   const record = findLast(to.matched, record => record.meta.authority);
   if (record && !check(record.meta.authority)) {
     if (to.path !== "/login") {

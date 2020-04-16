@@ -9,6 +9,7 @@ import "regenerator-runtime/runtime";
 require("./mock/mock");
 
 import {
+  message,
   Button,
   Layout,
   Menu,
@@ -45,6 +46,7 @@ Vue.use(Form);
 Vue.use(Checkbox);
 Vue.config.productionTip = false;
 Vue.prototype.$api = API;
+Vue.prototype.$message = message;
 
 new Vue({
   router,

@@ -15,6 +15,12 @@ const actions = {};
 const mutations = {
   setLogin(state, login) {
     state.loginState = login;
+  },
+  setUsername(state, username) {
+    state.username = username;
+  },
+  setSessionKey(state, sessionKey) {
+    state.sessionKey = sessionKey;
   }
 };
 

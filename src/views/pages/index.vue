@@ -124,7 +124,8 @@ export default {
   name: "index",
   data() {
     return {
-      infoData: []
+      infoData: [],
+      username: "用户登录"
     };
   },
   components: { ACol, ARow },

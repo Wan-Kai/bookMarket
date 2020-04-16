@@ -31,14 +31,11 @@
         <a-avatar icon="user" class="index_avatar" />
         <a-dropdown>
           <a class="index_avatar_dropdown" @click="onClick">
-            用户登录
+            {{ username }}<a-icon type="down" v-if="isLogin" />
           </a>
           <a-menu slot="overlay">
             <a-menu-item key="1" v-if="isLogin">
-              <router-link to="">详细信息</router-link>
-            </a-menu-item>
-            <a-menu-item key="2" v-if="isLogin">
-              <router-link to="/login">退出登录</router-link>
+              <span @click="exitLogin">退出登录</span>
             </a-menu-item>
           </a-menu>
         </a-dropdown>
@@ -61,11 +58,15 @@ export default {
     return {
       current: ["bookMarket"],
       visible: false,
-      isLogin: false
+      isLogin: false,
+      username: "用户登录"
     };
   },
   beforeMount() {
     this.isLogin = this.$store.getters.getIsLogin;
+    if (this.isLogin) {
+      this.username = this.$store.getters.getUsername;
+    }
   },
   components: {
     Footer
@@ -73,14 +74,23 @@ export default {
   methods: {
     onSearch() {},
     onClick() {
-      console.log("dainji");
       if (!this.isLogin) {
         this.$router.push({
           name: "login"
         });
       }
     },
+    exitLogin() {
+      this.$store.commit("login/setLogin", "guest");
+      this.$store.commit("login/setSessionKey", "");
+      this.$router.push({
+        name: "login"
+      });
+    },
     clickMenu(key) {
+      if (key.key === "ShoppingCard" && !this.isLogin) {
+        this.$message.error("请先登录");
+      }
       this.$router.push({
         name: key.key
       });

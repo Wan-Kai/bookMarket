@@ -13,11 +13,50 @@
           <a-form-item style="margin-bottom: 6px">
             <a-input
               v-decorator="[
-                'userName',
+                'phone',
                 {
                   rules: [
-                    { required: true, message: 'Please input your username!' }
+                    {
+                      required: true,
+                      message: '请输入正确的手机号码!',
+                      pattern: /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+                    }
                   ]
+                }
+              ]"
+              placeholder="手机号"
+            >
+              <a-icon
+                slot="prefix"
+                type="phone"
+                style="color: rgba(0,0,0,.25)"
+              />
+            </a-input>
+          </a-form-item>
+          <a-form-item style="margin-bottom: 6px">
+            <a-input
+              v-decorator="[
+                'name',
+                {
+                  rules: [{ required: true, message: '请输入您的姓名!' }]
+                }
+              ]"
+              placeholder="姓名"
+            >
+              <a-icon
+                slot="prefix"
+                type="crown"
+                style="color: rgba(0,0,0,.25)"
+              />
+            </a-input>
+          </a-form-item>
+          <a-form-item style="margin-bottom: 6px">
+            <a-input
+              style="width: 70%"
+              v-decorator="[
+                'userName',
+                {
+                  rules: [{ required: true, message: '请输入您的用户名!' }]
                 }
               ]"
               placeholder="用户名"
@@ -28,15 +67,16 @@
                 style="color: rgba(0,0,0,.25)"
               />
             </a-input>
+            <a-button type="dashed" style="width: 30%" @click="checkForUsername"
+              >检查可用</a-button
+            >
           </a-form-item>
           <a-form-item style="margin-bottom: 18px">
             <a-input
               v-decorator="[
                 'password',
                 {
-                  rules: [
-                    { required: true, message: 'Please input your Password!' }
-                  ]
+                  rules: [{ required: true, message: '请输入您的密码!' }]
                 }
               ]"
               type="password"
@@ -74,9 +114,49 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
+          this.$api.login
+            .register({
+              username: values.userName,
+              password: values.password,
+              name: values.name,
+              phone: values.phone
+            })
+            .then(res => {
+              console.log(res);
+              if (res.data.code === 200) {
+                this.$message.success("注册成功", 2);
+                this.$router.push({
+                  name: "login"
+                });
+              } else {
+                this.$message.error(res.data.message, 2);
+              }
+            });
         }
       });
+    },
+    checkForUsername() {
+      let username = this.form.getFieldValue("userName");
+
+      if (username) {
+        this.$api.login
+          .checkUsername({
+            username: username
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code === 200) {
+              this.$message.success("该用户名可用", 2);
+            } else {
+              this.$message.error("很遗憾，该用户名不可用", 2);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        this.$message.error("请先输入用户名", 2);
+      }
     },
     tologin() {
       this.$router.push({

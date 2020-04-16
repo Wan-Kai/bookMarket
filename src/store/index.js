@@ -12,6 +12,8 @@ export default new Vuex.Store({
     login
   },
   getters: {
+    getSessionKey: () => login.state.sessionKey,
+    getUsername: () => login.state.username,
     getLoginState: () => login.state.loginState,
     getIsLogin() {
       if (login.state.loginState === "guest") {

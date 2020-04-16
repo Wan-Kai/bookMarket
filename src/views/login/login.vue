@@ -49,9 +49,12 @@
               />
             </a-input>
           </a-form-item>
-          <p style="float: right">
+          <span style="float: left">
+            <a @click="enterOfGuest">以游客身份进入</a>
+          </span>
+          <span style="float: right">
             没有账号，<a @click="toRegister">现在注册</a>
-          </p>
+          </span>
           <a-button
             type="primary"
             @click="handleSubmit"
@@ -78,16 +81,41 @@ export default {
         if (!err) {
           console.log("Received values of form: ", values);
 
-          this.$store.commit("login/setLogin", "user");
-          this.$router.push({
-            name: "BookMarketIndex"
-          });
+          this.$api.login
+            .login({
+              username: values.userName,
+              password: values.password
+            })
+            .then(res => {
+              if (res.data.code === 200) {
+                this.$message.success("登录成功", 2);
+                let sessionKey = res.data.data["X-Auth-Token"];
+                this.$store.commit("login/setSessionKey", sessionKey);
+                this.$store.commit("login/setUsername", values.userName);
+                this.$store.commit("login/setLogin", "user");
+                setTimeout(() => {
+                  this.$router.push({
+                    name: "BookMarketIndex"
+                  });
+                }, 200);
+              } else {
+                this.$message.error(res.data.message);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
       });
     },
     toRegister() {
       this.$router.push({
         name: "register"
+      });
+    },
+    enterOfGuest() {
+      this.$router.push({
+        name: "BookMarketIndex"
       });
     }
   }
@@ -131,5 +159,6 @@ export default {
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
   margin-bottom: 48px;
+  margin-top: 10px;
 }
 </style>
