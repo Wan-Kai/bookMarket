@@ -53,6 +53,15 @@ const routes = [
           import(/* webpackChunkName: "dashboard" */ "../views/pages/index.vue")
       },
       {
+        path: "/bookMarket/detail",
+        name: "BookDetail",
+        meta: { title: "详情", authority: ["guest", "user"] },
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/pages/bookDetail.vue"
+          )
+      },
+      {
         path: "/bookMarket/shoppingCard",
         name: "ShoppingCard",
         meta: { title: "购物车", authority: ["user"] },

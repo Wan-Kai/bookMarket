@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "97355",
+      "name": "打折优惠",
+      "font_class": "weibiaoti1",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "5466068",
+      "name": "phone",
+      "font_class": "phone",
+      "unicode": "e725",
+      "unicode_decimal": 59173
+    },
+    {
+      "icon_id": "11993067",
+      "name": "minus-square",
+      "font_class": "minus-square",
+      "unicode": "e70b",
+      "unicode_decimal": 59147
+    },
+    {
+      "icon_id": "11993194",
+      "name": "plus-square-solid",
+      "font_class": "plus-square-solid",
+      "unicode": "e733",
+      "unicode_decimal": 59187
+    },
+    {
       "icon_id": "339475",
       "name": "人民币",
       "font_class": "renminbi",
@@ -25,20 +53,6 @@
       "font_class": "renminbi1688",
       "unicode": "e6cb",
       "unicode_decimal": 59083
-    },
-    {
-      "icon_id": "3461115",
-      "name": "人民币",
-      "font_class": "renminbi2",
-      "unicode": "e606",
-      "unicode_decimal": 58886
-    },
-    {
-      "icon_id": "5330237",
-      "name": "人民币",
-      "font_class": "renminbi4",
-      "unicode": "e76d",
-      "unicode_decimal": 59245
     },
     {
       "icon_id": "844648",

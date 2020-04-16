@@ -39,13 +39,13 @@
             <a-card :bordered="true" :hoverable="true">
               <a-col :span="8" style="height: 100%">
                 <i
-                  class="iconfont icon-car"
+                  class="iconfont icon-weibiaoti1"
                   style="color: #24936E;font-size: 64px;"
                 ></i>
               </a-col>
               <a-col :span="16" style="height: 100%">
                 <div style="padding: 16px;height: 100%">
-                  <span>更快的物流</span>
+                  <span>更优惠的折扣</span>
                 </div>
               </a-col>
             </a-card>
@@ -54,13 +54,13 @@
             <a-card :bordered="true" :hoverable="true">
               <a-col :span="8" style="height: 100%">
                 <i
-                  class="iconfont icon-car"
+                  class="iconfont icon-phone"
                   style="color: #24936E;font-size: 64px;"
                 ></i>
               </a-col>
               <a-col :span="16" style="height: 100%">
                 <div style="padding: 16px;height: 100%">
-                  <span>更快的物流</span>
+                  <span>更暖心的服务管家</span>
                 </div>
               </a-col>
             </a-card>
@@ -76,131 +76,36 @@
       <a-divider style="margin-top: 6px" />
       <div style="height: fit-content;margin-top: 30px">
         <a-row type="flex" justify="space-around" align="middle">
-          <a-col :span="4">
-            <a-card :bordered="false" :hoverable="true">
+          <a-col :span="4" v-for="text in infoData" :key="text.id">
+            <a-card
+              :bordered="false"
+              :hoverable="true"
+              :key="text.id"
+              @click="selectBook(text.id)"
+            >
               <a-row style="margin: 10px 0">
                 <a-col :span="24">
-                  <p class="book_index_content_bookList_p_type">书籍类别</p>
-                  <p class="book_index_content_bookList_p_name">书籍名称</p>
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="16" :offset="4">
-                  <img src="../../assets/book.jpg" style="width: 100%" />
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_price">
-                    <i
-                      class="iconfont icon-renminbi1"
-                      style="color: #24936E;font-size: 18px;"
-                    ></i
-                    >24.6
+                  <p class="book_index_content_bookList_p_type">
+                    {{ text.author }}
+                  </p>
+                  <p class="book_index_content_bookList_p_name">
+                    {{ text.name }}
                   </p>
                 </a-col>
               </a-row>
-            </a-card>
-          </a-col>
-          <a-col :span="4">
-            <a-card :bordered="false" :hoverable="true">
-              <a-row style="margin: 10px 0">
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_type">书籍类别</p>
-                  <p class="book_index_content_bookList_p_name">书籍名称</p>
-                </a-col>
-              </a-row>
               <a-row>
                 <a-col :span="16" :offset="4">
-                  <img src="../../assets/book.jpg" style="width: 100%" />
+                  <img :src="text.url" style="width: 100%" />
                 </a-col>
               </a-row>
               <a-row>
-                <a-col :span="24">
+                <a-col :span="24" :key="text.id">
                   <p class="book_index_content_bookList_p_price">
                     <i
                       class="iconfont icon-renminbi1"
                       style="color: #24936E;font-size: 18px;"
-                    ></i
-                    >29.7
-                  </p>
-                </a-col>
-              </a-row>
-            </a-card>
-          </a-col>
-          <a-col :span="4">
-            <a-card :bordered="false" :hoverable="true">
-              <a-row style="margin: 10px 0">
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_type">书籍类别</p>
-                  <p class="book_index_content_bookList_p_name">书籍名称</p>
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="16" :offset="4">
-                  <img src="../../assets/book.jpg" style="width: 100%" />
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_price">
-                    <i
-                      class="iconfont icon-renminbi1"
-                      style="color: #24936E;font-size: 18px;"
-                    ></i
-                    >53.6
-                  </p>
-                </a-col>
-              </a-row>
-            </a-card>
-          </a-col>
-          <a-col :span="4">
-            <a-card :bordered="false" :hoverable="true">
-              <a-row style="margin: 10px 0">
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_type">书籍类别</p>
-                  <p class="book_index_content_bookList_p_name">书籍名称</p>
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="16" :offset="4">
-                  <img src="../../assets/book.jpg" style="width: 100%" />
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_price">
-                    <i
-                      class="iconfont icon-renminbi1"
-                      style="color: #24936E;font-size: 18px;"
-                    ></i
-                    >30
-                  </p>
-                </a-col>
-              </a-row>
-            </a-card>
-          </a-col>
-          <a-col :span="4">
-            <a-card :bordered="false" :hoverable="true">
-              <a-row style="margin: 10px 0">
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_type">书籍类别</p>
-                  <p class="book_index_content_bookList_p_name">书籍名称</p>
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="16" :offset="4">
-                  <img src="../../assets/book.jpg" style="width: 100%" />
-                </a-col>
-              </a-row>
-              <a-row>
-                <a-col :span="24">
-                  <p class="book_index_content_bookList_p_price">
-                    <i
-                      class="iconfont icon-renminbi1"
-                      style="color: #24936E;font-size: 18px;"
-                    ></i
-                    >121
+                    ></i>
+                    {{ text.price }}
                   </p>
                 </a-col>
               </a-row>
@@ -217,7 +122,31 @@ import ARow from "ant-design-vue/es/grid/Row";
 import ACol from "ant-design-vue/es/grid/Col";
 export default {
   name: "index",
-  components: { ACol, ARow }
+  data() {
+    return {
+      infoData: []
+    };
+  },
+  components: { ACol, ARow },
+  beforeMount() {
+    this.$api.index
+      .indexBooks({})
+      .then(res => {
+        console.log(res);
+        this.infoData = res.data.result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  methods: {
+    selectBook(id) {
+      this.$router.push({
+        name: "BookDetail",
+        query: { id: id }
+      });
+    }
+  }
 };
 </script>
 
@@ -236,8 +165,8 @@ export default {
 }
 .book_index_content_bookList_p_name {
   text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 10px;
 }
 .book_index_content_bookList_p_price {
