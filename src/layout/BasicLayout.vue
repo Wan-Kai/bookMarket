@@ -35,6 +35,9 @@
           </a>
           <a-menu slot="overlay">
             <a-menu-item key="1" v-if="isLogin">
+              <span @click="userInfo">用户信息</span>
+            </a-menu-item>
+            <a-menu-item key="2" v-if="isLogin">
               <span @click="exitLogin">退出登录</span>
             </a-menu-item>
           </a-menu>
@@ -54,6 +57,7 @@
 import Footer from "./Footer.vue";
 export default {
   name: "basicLayout",
+  inject: ["reload"],
   data() {
     return {
       current: ["bookMarket"],
@@ -77,7 +81,28 @@ export default {
     Footer
   },
   methods: {
-    onSearch() {},
+    onSearch(name) {
+      console.log(name);
+      this.$api.index
+        .indexBooks({
+          start: 0,
+          itemNameChi: name
+        })
+        .then(res => {
+          if (res.data.code === 200) {
+            let bookList = res.data.data.list;
+            console.log(bookList);
+            this.$router.push({
+              name: "BookDetail",
+              query: { id: bookList[0].itemId, name: bookList[0].itemNameChi }
+            });
+            this.reload();
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     onClick() {
       if (!this.isLogin) {
         this.$router.push({
@@ -98,6 +123,11 @@ export default {
       }
       this.$router.push({
         name: key.key
+      });
+    },
+    userInfo() {
+      this.$router.push({
+        name: "UserDetail"
       });
     }
   }

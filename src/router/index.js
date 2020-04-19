@@ -55,10 +55,19 @@ const routes = [
       {
         path: "/bookMarket/detail",
         name: "BookDetail",
-        meta: { title: "详情", authority: ["user"] },
+        meta: { title: "书籍详情", authority: ["user"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/pages/bookDetail.vue"
+          )
+      },
+      {
+        path: "/bookMarket/user",
+        name: "UserDetail",
+        meta: { title: "用户详情", authority: ["user"] },
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/pages/userInfo.vue"
           )
       },
       {

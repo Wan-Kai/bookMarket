@@ -28,7 +28,10 @@ import {
   Tooltip,
   Spin,
   List,
-  Comment
+  Comment,
+  Tabs,
+  Descriptions,
+  Cascader
 } from "ant-design-vue";
 
 Vue.use(Button);
@@ -52,6 +55,9 @@ Vue.use(Tooltip);
 Vue.use(Spin);
 Vue.use(List);
 Vue.use(Comment);
+Vue.use(Tabs);
+Vue.use(Descriptions);
+Vue.use(Cascader);
 Vue.config.productionTip = false;
 Vue.prototype.$api = API;
 Vue.prototype.$message = message;

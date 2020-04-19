@@ -21,6 +21,17 @@ export default {
     //   return get("/indexBooks", data);
     // }
   },
+  user: {
+    userInfo: () => {
+      return get("/check");
+    },
+    editUserInfo: data => {
+      return post("/userInfo", data);
+    }
+    // indexBooks: data => {
+    //   return get("/indexBooks", data);
+    // }
+  },
   book: {
     comment: data => {
       return get("/comment", data);

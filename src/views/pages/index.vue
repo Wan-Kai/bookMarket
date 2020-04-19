@@ -1,7 +1,7 @@
 <template>
   <a-layout class="book_index_content">
-    <a-spin v-if="!dataReady" style="margin-top: 100px" />
-    <div v-if="dataReady">
+    <a-spin v-if="!dataReady1 && !dataReady2" style="margin-top: 100px" />
+    <div v-if="dataReady1 && dataReady2">
       <div>
         <a-carousel autoplay>
           <div class="book_index_content_container">
@@ -194,7 +194,7 @@
         <a-divider style="margin-top: 6px" />
         <div style="height: fit-content;margin-top: 30px">
           <a-row type="flex" justify="space-around" align="middle">
-            <a-col :span="4" v-for="text in infoDataRow1" :key="text.itemId">
+            <a-col :span="4" v-for="text in infoDataRow3" :key="text.itemId">
               <a-card
                 :bordered="false"
                 :hoverable="true"
@@ -231,7 +231,7 @@
             </a-col>
           </a-row>
           <a-row type="flex" justify="space-around" align="middle">
-            <a-col :span="4" v-for="text in infoDataRow2" :key="text.itemId">
+            <a-col :span="4" v-for="text in infoDataRow4" :key="text.itemId">
               <a-card
                 :bordered="false"
                 :hoverable="true"
@@ -287,7 +287,8 @@ export default {
 
       username: "用户登录",
       listSize: 0,
-      dataReady: false
+      dataReady1: false,
+      dataReady2: false
     };
   },
   components: { ACol, ARow },
@@ -309,14 +310,6 @@ export default {
             infoData[i].itemCover = baseUrl + infoData[i].itemCover;
             this.infoDataRow2.push(infoData[i]);
           }
-          // for(let i=10;i<15;i++){
-          //   infoData[i].itemCover = "https://pic.intellizhi.cn/"+infoData[i].itemCover
-          //   this.infoDataRow3.push(infoData[i]);
-          // }
-          // for(let i=15;i<20;i++){
-          //   infoData[i].itemCover = "https://pic.intellizhi.cn/"+infoData[i].itemCover
-          //   this.infoDataRow4.push(infoData[i]);
-          // }
         } else {
           this.$message.error("查询失败");
         }
@@ -325,7 +318,35 @@ export default {
         console.log(err);
       })
       .finally(() => {
-        this.dataReady = true;
+        this.dataReady1 = true;
+      });
+
+    this.$api.index
+      .indexBooks({
+        start: 10
+      })
+      .then(res => {
+        if (res.data.code === 200) {
+          this.listSize = res.data.data.total;
+          let infoData = res.data.data.list;
+          let baseUrl = this.$store.getters.getBaseUrl.toString();
+          for (let i = 0; i < 5; i++) {
+            infoData[i].itemCover = baseUrl + infoData[i].itemCover;
+            this.infoDataRow3.push(infoData[i]);
+          }
+          for (let i = 5; i < 10; i++) {
+            infoData[i].itemCover = baseUrl + infoData[i].itemCover;
+            this.infoDataRow4.push(infoData[i]);
+          }
+        } else {
+          this.$message.error("查询失败");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.dataReady2 = true;
       });
   },
   methods: {

@@ -5,9 +5,9 @@ import store from "../store";
 if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "https://xgame.minizhi.cn/api";
 } else if (process.env.NODE_ENV === "debug") {
-  axios.defaults.baseURL = "/api";
+  axios.defaults.baseURL = "https://xgame.minizhi.cn/api";
 } else if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "/api";
+  axios.defaults.baseURL = "https://xgame.minizhi.cn/api";
 }
 
 // 项目地址加端口
@@ -85,23 +85,25 @@ export function get(url, data = {}) {
     }
   };
   // sendObject.data=JSON.stringify(data);
-  console.log(store.getters.getSessionKey);
   return service(sendObject).catch(() => {});
 }
 
 //封装post请求
 export function post(url, data = {}) {
+  const formData = new FormData();
+  Object.keys(data).forEach(key => {
+    formData.append(key, data[key]);
+  });
   //默认配置
   let sendObject = {
     url: url,
     method: "post",
-    params: data,
+    data: formData,
     headers: {
       "X-Auth-Token": store.getters.getSessionKey
     }
   };
   // sendObject.data=JSON.stringify(data);
-  console.log(store.getters.getSessionKey);
   return service(sendObject).catch(() => {});
 }
 

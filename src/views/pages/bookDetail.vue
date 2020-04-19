@@ -31,7 +31,7 @@
               <span>{{ itemISBN }}</span>
             </p>
             <p style="margin-bottom: 5px;color: black">
-              Star：
+              库存：
               <span>{{ itemStack }}</span>
             </p>
             <p style="margin-bottom: 5px;color: black">
