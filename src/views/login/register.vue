@@ -89,7 +89,9 @@
               />
             </a-input>
           </a-form-item>
-          <p style="float: right">已有账号，<a @click="tologin">立即登录</a></p>
+          <span style="float: right"
+            >已有账号，<a @click="tologin">立即登录</a></span
+          >
           <a-button
             type="primary"
             @click="handleSubmit"
@@ -204,5 +206,6 @@ export default {
 #components-form-demo-normal-register .register-form-button {
   width: 100%;
   margin-bottom: 48px;
+  margin-top: 20px;
 }
 </style>

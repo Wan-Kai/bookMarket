@@ -6,6 +6,6 @@ mock.mock(`/api/shoppingDetail`, "get", () => {
   return shoppingCard.shoppingData;
 });
 
-mock.mock(`/api/indexBooks`, "get", () => {
+mock.mock(RegExp(`/api/indexBooks` + ".*"), "get", () => {
   return indexBook.indexBooks;
 });

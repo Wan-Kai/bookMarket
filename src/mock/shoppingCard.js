@@ -10,7 +10,8 @@ const shoppingData = Mock.mock({
       author: "李智",
       type: "自传类",
       amount: "1",
-      price: "99"
+      price: "99",
+      itemID: "@id"
     }
   ]
 });

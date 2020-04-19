@@ -1,5 +1,5 @@
 // 引入 axios 封装方法
-import { get, post, login } from "./axios";
+import { get, post, login, deletes } from "./axios";
 
 export default {
   login: {
@@ -15,8 +15,11 @@ export default {
   },
   index: {
     indexBooks: data => {
-      return get("/indexBooks", data);
+      return get("/getItemList", data);
     }
+    // indexBooks: data => {
+    //   return get("/indexBooks", data);
+    // }
   },
   other: {
     indexBooks: data => {
@@ -25,7 +28,13 @@ export default {
   },
   shoppingCard: {
     shoppingDetail: data => {
-      return get("/shoppingDetail", data);
+      return get("/reserve", data);
+    },
+    addBook: data => {
+      return post("/reserve", data);
+    },
+    deletesBook: data => {
+      return deletes("/reserve", data);
     }
   }
 };

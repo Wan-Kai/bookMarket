@@ -83,7 +83,8 @@ export function get(url, data = {}) {
     method: "get",
     params: data,
     headers: {
-      Authorization: store.getters.getSessionKey
+      Authorization: store.getters.getSessionKey,
+      "X-Auth-Token": store.getters.getSessionKey
     }
   };
   // sendObject.data=JSON.stringify(data);
@@ -92,42 +93,31 @@ export function get(url, data = {}) {
 
 //封装post请求
 export function post(url, data = {}) {
-  //用form data传输
-  let form = new FormData();
-  let keys = Object.keys(data);
-  keys.forEach(key => {
-    form.append(key, data[key]);
-  });
   //默认配置
   let sendObject = {
     url: url,
     method: "post",
+    params: data,
     headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: store.getters.getSessionKey
-    },
-    data: form
+      Authorization: store.getters.getSessionKey,
+      "X-Auth-Token": store.getters.getSessionKey
+    }
   };
   // sendObject.data=JSON.stringify(data);
+  console.log(store.getters.getSessionKey);
   return service(sendObject).catch(() => {});
 }
 
 //封装put方法
 export function put(url, data = {}) {
-  //用form data传输
-  let form = new FormData();
-  let keys = Object.keys(data);
-  keys.forEach(key => {
-    form.append(key, data[key]);
-  });
   return service({
     url: url,
     method: "put",
+    params: data,
     headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: store.getters.getSessionKey
-    },
-    data: form
+      Authorization: store.getters.getSessionKey,
+      "X-Auth-Token": store.getters.getSessionKey
+    }
   });
 }
 
@@ -136,10 +126,11 @@ export function deletes(url, data = {}) {
   let sendObject = {
     url: url,
     method: "delete",
+    params: data,
     headers: {
-      Authorization: store.getters.getSessionKey
-    },
-    data: JSON.stringify(data)
+      Authorization: store.getters.getSessionKey,
+      "X-Auth-Token": store.getters.getSessionKey
+    }
   };
   // sendObject.data=JSON.stringify(data);
   return service(sendObject).catch(() => {});

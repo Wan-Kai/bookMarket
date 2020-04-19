@@ -25,7 +25,10 @@ import {
   Card,
   Divider,
   Form,
-  Checkbox
+  Checkbox,
+  Empty,
+  Tooltip,
+  Spin
 } from "ant-design-vue";
 
 Vue.use(Button);
@@ -44,6 +47,9 @@ Vue.use(Card);
 Vue.use(Divider);
 Vue.use(Form);
 Vue.use(Checkbox);
+Vue.use(Empty);
+Vue.use(Tooltip);
+Vue.use(Spin);
 Vue.config.productionTip = false;
 Vue.prototype.$api = API;
 Vue.prototype.$message = message;

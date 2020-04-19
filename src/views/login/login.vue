@@ -49,9 +49,6 @@
               />
             </a-input>
           </a-form-item>
-          <span style="float: left">
-            <a @click="enterOfGuest">以游客身份进入</a>
-          </span>
           <span style="float: right">
             没有账号，<a @click="toRegister">现在注册</a>
           </span>
@@ -159,6 +156,6 @@ export default {
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
   margin-bottom: 48px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 </style>

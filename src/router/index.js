@@ -37,7 +37,7 @@ const routes = [
   {
     path: "/",
     hideInMenu: true,
-    meta: { authority: ["guest", "user"] },
+    meta: { authority: ["user"] },
     component: () =>
       import(/* webpackChunkName: "user" */ "../layout/BasicLayout.vue"),
     children: [
@@ -48,14 +48,14 @@ const routes = [
       {
         path: "/bookMarket/index",
         name: "BookMarketIndex",
-        meta: { title: "首页", authority: ["guest", "user"] },
+        meta: { title: "首页", authority: ["user"] },
         component: () =>
           import(/* webpackChunkName: "dashboard" */ "../views/pages/index.vue")
       },
       {
         path: "/bookMarket/detail",
         name: "BookDetail",
-        meta: { title: "详情", authority: ["guest", "user"] },
+        meta: { title: "详情", authority: ["user"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/pages/bookDetail.vue"
