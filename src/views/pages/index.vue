@@ -116,7 +116,7 @@
                 :bordered="false"
                 :hoverable="true"
                 :key="text.itemId"
-                @click="selectBook(text.itemId)"
+                @click="selectBook(text.itemId, text.itemNameChi)"
               >
                 <a-row style="margin: 10px 0">
                   <a-col :span="24">
@@ -153,7 +153,7 @@
                 :bordered="false"
                 :hoverable="true"
                 :key="text.itemId"
-                @click="selectBook(text.itemId)"
+                @click="selectBook(text.itemId, text.itemNameChi)"
               >
                 <a-row style="margin: 10px 0">
                   <a-col :span="24">
@@ -199,7 +199,7 @@
                 :bordered="false"
                 :hoverable="true"
                 :key="text.itemId"
-                @click="selectBook(text.itemId)"
+                @click="selectBook(text.itemId, text.itemNameChi)"
               >
                 <a-row style="margin: 10px 0">
                   <a-col :span="24">
@@ -236,7 +236,7 @@
                 :bordered="false"
                 :hoverable="true"
                 :key="text.itemId"
-                @click="selectBook(text.itemId)"
+                @click="selectBook(text.itemId, text.itemNameChi)"
               >
                 <a-row style="margin: 10px 0">
                   <a-col :span="24">
@@ -329,10 +329,10 @@ export default {
       });
   },
   methods: {
-    selectBook(id) {
+    selectBook(id, name) {
       this.$router.push({
         name: "BookDetail",
-        query: { id: id }
+        query: { id: id, name: name }
       });
     }
   }

@@ -3,7 +3,7 @@ import store from "../store";
 
 // 环境的切换
 if (process.env.NODE_ENV === "development") {
-  axios.defaults.baseURL = "/api";
+  axios.defaults.baseURL = "https://xgame.minizhi.cn/api";
 } else if (process.env.NODE_ENV === "debug") {
   axios.defaults.baseURL = "/api";
 } else if (process.env.NODE_ENV === "production") {
@@ -19,16 +19,14 @@ const service = axios.create({
 });
 
 // request拦截器
-// Authorization已在各请求体封装，无需再统一声明
 service.interceptors.request.use(
   config => {
-    // config.headers["Access-Control-Allow-Origin"] = "*";
-    // config.headers["Access-Control-Allow-Headers"] =
-    //   "Accept, Origin, XRequestedWith, Content-Type, LastModified";
-    // config.headers["Access-Control-Allow-Methods"] =
-    //   "PUT,POST,GET,DELETE,OPTIONS";
-    // config.changeOrigin = true;
-    // config.supportsCredentials = true;
+    config.headers["Access-Control-Allow-Origin"] = "https://xgame.minizhi.cn";
+    config.headers["Access-Control-Allow-Headers"] =
+      "Accept, Origin, XRequestedWith, Content-Type, LastModified";
+    config.headers["Access-Control-Allow-Methods"] =
+      "PUT,POST,GET,DELETE,OPTIONS";
+    config.withCredentials = false;
 
     return config;
   },
@@ -83,11 +81,11 @@ export function get(url, data = {}) {
     method: "get",
     params: data,
     headers: {
-      Authorization: store.getters.getSessionKey,
       "X-Auth-Token": store.getters.getSessionKey
     }
   };
   // sendObject.data=JSON.stringify(data);
+  console.log(store.getters.getSessionKey);
   return service(sendObject).catch(() => {});
 }
 
@@ -99,7 +97,6 @@ export function post(url, data = {}) {
     method: "post",
     params: data,
     headers: {
-      Authorization: store.getters.getSessionKey,
       "X-Auth-Token": store.getters.getSessionKey
     }
   };
@@ -115,7 +112,6 @@ export function put(url, data = {}) {
     method: "put",
     params: data,
     headers: {
-      Authorization: store.getters.getSessionKey,
       "X-Auth-Token": store.getters.getSessionKey
     }
   });
@@ -128,7 +124,6 @@ export function deletes(url, data = {}) {
     method: "delete",
     params: data,
     headers: {
-      Authorization: store.getters.getSessionKey,
       "X-Auth-Token": store.getters.getSessionKey
     }
   };

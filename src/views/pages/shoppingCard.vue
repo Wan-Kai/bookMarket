@@ -117,7 +117,7 @@
                       :bordered="false"
                       :hoverable="true"
                       style="height: 100%"
-                      @click="getBookDetail(text.itemId)"
+                      @click="getBookDetail(text.itemId, text.itemNameChi)"
                     >
                       <a-row style="margin: 10px 0">
                         <a-col :span="24">
@@ -360,11 +360,10 @@ export default {
     commitShoppingCard() {
       this.$message.success("亲，您的订单已经发送，请注意在今晚梦中签收哦!");
     },
-    getBookDetail(record) {
-      console.log(record);
+    getBookDetail(id, name) {
       this.$router.push({
         name: "BookDetail",
-        query: { id: record }
+        query: { id: id, name: name }
       });
     }
   }

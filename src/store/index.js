@@ -16,6 +16,7 @@ export default new Vuex.Store({
   getters: {
     getSessionKey: () => login.state.sessionKey,
     getUsername: () => login.state.username,
+    getAvatar: () => login.state.avatar,
     getLoginState: () => login.state.loginState,
     getBaseUrl: () => util.state.baseUrl,
     getIsLogin() {

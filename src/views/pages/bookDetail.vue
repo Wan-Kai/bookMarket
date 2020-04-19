@@ -60,60 +60,56 @@
             <p style="text-indent:2em">{{ itemIntro }}</p>
           </a-col>
         </a-row>
-        <div style="height: fit-content;margin-top: 50px;text-align: left">
-          <span style="font-size: 16px;color: #42b983">短评</span>
-          <a style="margin-left: 10px" @click="showTextarea = !showTextarea"
-            >...</a
-          >
-          <form :form="form" style="margin: 0">
-            <a-form-item style="margin: 0">
-              <a-textarea
-                :rows="4"
-                placeholder="我也来说两句"
-                v-if="showTextarea"
-                name="fade"
-                style="margin: 10px 0"
-                v-decorator="[
-                  'comment',
-                  {
-                    rules: [
-                      { required: true, message: 'Please input your Password!' }
-                    ]
-                  }
-                ]"
-              />
-            </a-form-item>
-            <a-form-item style="margin: 0">
-              <a-button
-                v-if="showTextarea"
-                style="float: right;margin-bottom: 10px"
-                type="primary"
-                @click="tip"
-                >提交</a-button
-              >
-            </a-form-item>
-          </form>
-        </div>
-        <div>
-          <a-divider style="margin-top: 10px" />
-          <div>
-            <p style="margin-bottom: 5px;color: #0086b3">
-              特朗普<span style="margin-left: 20px;color: grey"
-                >2020.03.13</span
-              >
-            </p>
-            <p style="font-size: 13px">我不要你觉得，我要我觉得</p>
-            <a-divider dashed style="margin-top: 10px" />
-          </div>
-          <div>
-            <p style="margin-bottom: 5px;color: #0086b3">
-              黑人抬棺员<span style="margin-left: 20px;color: grey"
-                >2019.05.26</span
-              >
-            </p>
-            <p style="font-size: 13px">阿伟死了，我说的，耶稣也救不了他</p>
-            <a-divider dashed style="margin-top: 10px" />
-          </div>
+      </div>
+    </div>
+    <a-spin v-if="!commentReady" style="margin-top: 100px" />
+    <div
+      v-if="commentReady"
+      style="max-width: 1140px;width: 1140px;margin: 30px auto"
+    >
+      <div style="height: fit-content;margin-top: 50px;text-align: left">
+        <span style="font-size: 16px;color: #42b983">短评</span>
+        <a
+          style="margin-left: 10px;font-size: 8px"
+          @click="showTextarea = !showTextarea"
+          >来评论一下...</a
+        >
+        <a-form :form="form" style="margin: 0" v-if="showTextarea">
+          <a-form-item style="margin: 0">
+            <a-textarea
+              :rows="4"
+              placeholder="我也来说两句"
+              style="margin: 10px 0"
+              v-decorator="[
+                'comment',
+                {
+                  rules: [{ required: true, message: '请填写评论!' }]
+                }
+              ]"
+            />
+          </a-form-item>
+          <a-form-item style="margin: 0">
+            <a-button
+              style="float: right;margin-bottom: 10px"
+              type="primary"
+              @click="tip"
+              >提交</a-button
+            >
+          </a-form-item>
+        </a-form>
+      </div>
+      <div>
+        <a-divider style="margin-top: 10px" />
+        <div v-for="item in commentList" :key="item.commentId">
+          <a-avatar :src="item.url" />
+          <span style="margin-bottom: 5px;color: #0086b3">
+            {{ item.userNickName
+            }}<span style="margin-left: 20px;color: grey"></span>
+          </span>
+          <p style="font-size: 13px;margin-top: 8px;text-indent:2em">
+            {{ item.comment }}
+          </p>
+          <a-divider dashed style="margin-top: 10px" />
         </div>
       </div>
     </div>
@@ -127,11 +123,12 @@ import AFormItem from "ant-design-vue/es/form/FormItem";
 export default {
   name: "bookDetail",
   components: { AFormItem, ACol, ARow },
+  inject: ["reload"],
   data() {
+    this.form = this.$form.createForm(this);
     return {
       id: "",
-      showTextarea: false,
-      form: this.$form.createForm(this, { name: "coordinated" }),
+      name: "",
 
       itemNameChi: "",
       itemNameEng: "",
@@ -142,35 +139,38 @@ export default {
       itemISBN: "",
       itemStack: "",
       tagInfos: [],
-      dataReady: false
+
+      commentList: [],
+      dataReady: false,
+      commentReady: false,
+      showTextarea: false
     };
   },
   beforeMount() {
     this.id = this.$route.query.id;
+    this.name = this.$route.query.name;
+    let baseUrl = this.$store.getters.getBaseUrl.toString();
+
     this.$api.index
       .indexBooks({
-        start: 0
+        start: 0,
+        itemNameChi: this.name
       })
       .then(res => {
         if (res.data.code === 200) {
           let bookList = res.data.data.list;
           let getComment = "";
-          let baseUrl = this.$store.getters.getBaseUrl.toString();
           for (let i = 0; i < bookList.length; i++) {
-            if (this.id === bookList[i].itemId) {
-              this.itemNameChi = bookList[i].itemNameChi;
-              this.itemNameEng = bookList[i].itemNameEng;
-              this.itemCover = baseUrl + bookList[i].itemCover;
-              getComment = bookList[i].itemIntro; //简介
-              this.itemAuthor = bookList[i].itemAuthor;
-              this.itemPrice = bookList[i].itemPrice;
-              this.itemISBN = bookList[i].itemISBN;
-              this.itemStack = bookList[i].itemStack;
-              this.tagInfos = bookList[i].tagInfos;
-              break;
-            }
+            this.itemNameChi = bookList[i].itemNameChi;
+            this.itemNameEng = bookList[i].itemNameEng;
+            this.itemCover = baseUrl + bookList[i].itemCover;
+            getComment = bookList[i].itemIntro; //简介
+            this.itemAuthor = bookList[i].itemAuthor;
+            this.itemPrice = bookList[i].itemPrice;
+            this.itemISBN = bookList[i].itemISBN;
+            this.itemStack = bookList[i].itemStack;
+            this.tagInfos = bookList[i].tagInfos;
           }
-
           this.itemIntro = "";
           const zeroOrMoreOsRegex = />+[^<]+</gi;
           let commentList = getComment.match(zeroOrMoreOsRegex);
@@ -186,6 +186,28 @@ export default {
       })
       .finally(() => {
         this.dataReady = true;
+      });
+
+    this.$api.book
+      .comment({
+        start: 0,
+        itemId: this.id
+      })
+      .then(res => {
+        if (res.data.code === 200) {
+          this.commentList = res.data.data.list;
+          this.commentList.forEach(item => {
+            item.url = baseUrl + item.avatar;
+          });
+        } else {
+          this.$message.error("获取用户评论失败");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.commentReady = true;
       });
   },
   methods: {
@@ -209,7 +231,29 @@ export default {
         });
     },
     tip() {
-      this.$message.success("暂不支持呢亲！");
+      this.form.validateFields((err, value) => {
+        if (!err) {
+          this.$api.book
+            .createComment({
+              itemId: this.id,
+              comment: value.comment
+            })
+            .then(res => {
+              if (res.data.code === 200) {
+                this.$message.success("发表成功！");
+              } else {
+                this.$message.error("发表失败！");
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+            .finally(() => {
+              this.showTextarea = false;
+              this.reload();
+            });
+        }
+      });
     }
   }
 };

@@ -28,7 +28,7 @@
         </a-menu>
       </div>
       <div class="index_user">
-        <a-avatar icon="user" class="index_avatar" />
+        <a-avatar :src="avatar" class="index_avatar" />
         <a-dropdown>
           <a class="index_avatar_dropdown" @click="onClick">
             {{ username }}<a-icon type="down" v-if="isLogin" />
@@ -59,13 +59,18 @@ export default {
       current: ["bookMarket"],
       visible: false,
       isLogin: false,
+      avatar: "",
       username: "用户登录"
     };
   },
   beforeMount() {
+    let baseUrl = this.$store.getters.getBaseUrl.toString();
     this.isLogin = this.$store.getters.getIsLogin;
     if (this.isLogin) {
       this.username = this.$store.getters.getUsername;
+      this.avatar = baseUrl + this.$store.getters.getAvatar;
+      console.log(this.avatar);
+      console.log(this.$store.getters.getAvatar);
     }
   },
   components: {

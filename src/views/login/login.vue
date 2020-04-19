@@ -87,8 +87,12 @@ export default {
               if (res.data.code === 200) {
                 this.$message.success("登录成功", 2);
                 let sessionKey = res.data.data["X-Auth-Token"];
+                console.log(res);
+                console.log(sessionKey);
+                let avatar = res.data.data.userInfo["avatar"];
                 this.$store.commit("login/setSessionKey", sessionKey);
                 this.$store.commit("login/setUsername", values.userName);
+                this.$store.commit("login/setAvatar", avatar);
                 this.$store.commit("login/setLogin", "user");
                 setTimeout(() => {
                   this.$router.push({

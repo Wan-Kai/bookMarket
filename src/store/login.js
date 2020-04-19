@@ -2,7 +2,8 @@
 const state = {
   username: "",
   loginState: "guest",
-  sessionKey: ""
+  sessionKey: "",
+  avatar: ""
 };
 
 // getters
@@ -21,6 +22,9 @@ const mutations = {
   },
   setSessionKey(state, sessionKey) {
     state.sessionKey = sessionKey;
+  },
+  setAvatar(state, avatar) {
+    state.avatar = avatar;
   }
 };
 

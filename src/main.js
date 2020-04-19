@@ -6,8 +6,6 @@ import store from "./store";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-require("./mock/mock");
-
 import {
   message,
   Button,
@@ -28,7 +26,9 @@ import {
   Checkbox,
   Empty,
   Tooltip,
-  Spin
+  Spin,
+  List,
+  Comment
 } from "ant-design-vue";
 
 Vue.use(Button);
@@ -50,6 +50,8 @@ Vue.use(Checkbox);
 Vue.use(Empty);
 Vue.use(Tooltip);
 Vue.use(Spin);
+Vue.use(List);
+Vue.use(Comment);
 Vue.config.productionTip = false;
 Vue.prototype.$api = API;
 Vue.prototype.$message = message;

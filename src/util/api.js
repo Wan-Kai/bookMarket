@@ -21,6 +21,14 @@ export default {
     //   return get("/indexBooks", data);
     // }
   },
+  book: {
+    comment: data => {
+      return get("/comment", data);
+    },
+    createComment: data => {
+      return post("/comment", data);
+    }
+  },
   other: {
     indexBooks: data => {
       return post("/indexBooks", data);
